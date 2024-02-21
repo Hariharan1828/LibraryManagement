@@ -1,12 +1,8 @@
-# Stage 1: Build the application
-FROM maven:3.8.4-openjdk-17 AS builder
-WORKDIR /app
+FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
-RUN apt-get update && apt-get install -y bash && mvn clean install
+RUN mvn clean package -DskipTests
 
-# Stage 2: Create the runtime image
-FROM openjdk:17
-VOLUME /tmp
-COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=build ./target/Library-Management-0.0.1-SNAPSHOT.jar demo.jar
 EXPOSE 8081
+ENTRYPOINT ["java","-jar","demo.jar"]
