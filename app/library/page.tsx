@@ -7,7 +7,7 @@ import BookTable from '@/components/BookTable';
   
   
 
-const page = () => {
+const Page = () => {
     const [data, setData] = useState<Book[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -55,4 +55,4 @@ const page = () => {
 };
 
 
-export default page
+export default Page
